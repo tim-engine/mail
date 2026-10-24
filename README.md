@@ -27,12 +27,11 @@
 ```timl
 @import "pkg/mail"
 
-@mail-body($title="Welcome", $background-color="#f4f4f4", $preview="Preview text"):
-  @section():
-    @column():
-      @text("Hello, " & $this["name"] & "!")
-      @divider($border-color="#cccccc", $border-width="1px")
-      @mail-button($label="Get started", $href="https://example.com/start", $background-color="#e74c3c")
+@mail-body($title="Welcome", $background-color="#f4f4f4", $preview="Preview text")
+  @section > @column
+    @text("Hello, ")
+    @divider($border-color="#cccccc", $border-width="1px")
+    @mail-button($label="Get started", $href="https://example.com/start", $background-color="#e74c3c")
 ```
 
 See `test/welcome.timl` for a full example exercising every macro
@@ -67,6 +66,14 @@ Names are kebab-case, mirroring MJML attributes.
   content in `text`'s `content` param instead of a trailing string.
   Leaf macros (`text`, `image`, `divider`, `mail-button`, `spacer`)
   are called **without** a trailing colon.
+- **Inline `>` nesting.** `@section > @column` plus an indented block
+  renders exactly like the nested form — the trailing block always
+  belongs to the deepest node. Chains mix freely with elements
+  (`@section > div`, `div > @column`) and carry args/parens
+  (`@section($padding="0") > @column()`). Siblings after the chain stay
+  siblings. (Plain `fn()` calls can't nest this way: `>` after a
+  function is the greater-than operator, and functions have no body
+  slot for a trailing block.)
 - **One file.** `src/mail.timl` holds every macro: the engine drops
   transitive imports, so an aggregator re-exporting per-file modules
   resolves to an empty module.
