@@ -8,7 +8,19 @@
 </p>
 
 ## Features
-- 
+
+- **Full document shell** (`mail-body`) — `html` with Outlook namespaces, head meta tags, a responsive `<style>` block, hidden preview preheader text, and a `role="article"` wrapper. Tim re-adds `<!DOCTYPE html>` at render.
+- **MJML-style layout** (`section` + `column`) — nested `role="presentation"` tables with zero `font-size` gutters, Outlook conditional wrappers, and centered max-width container.
+- **Outlook support throughout** — every structural macro emits `<!--[if mso | IE]>` wrappers; sections with `background-url` additionally emit a VML `v:rect` block for desktop Outlook plus `bgcolor`/`background` fallbacks for everyone else.
+- **Bulletproof buttons** (`mail-button`) — `bgcolor` + `mso-padding-alt` carry Outlook, the padded `<a>` carries every other client. Prefixed to avoid clashing with bootstrap's `button`.
+- **Fluid images** (`image`) — block-display image tables with optional link wrapping (`href`).
+- **Dividers** (`divider`) — `border-top` paragraph plus the empty Outlook table fallback.
+- **Spacers** (`spacer`) — hair-space divs that Outlook won't collapse. Keep these out of `@text`; use spacers for vertical rhythm.
+- **Responsive by default** — columns stack to 100% below `breakpoint` (default `480px`) via the `.mail-column` media query. Pass explicit widths for multi-column rows (`@column("50%")` + `@column("50%")`).
+- **MJML defaults, kebab-case params** — every param mirrors its MJML attribute and default, so MJML knowledge transfers directly.
+- **Named or positional args** — `name=value` and `$name=value` both work, in any order, mixed with positionals. Unknown names, duplicates, and missing required args are compile errors.
+- **Template data in content** — `content` params are plain expressions, so `$this`/`$app` flow in naturally (`@text("Hello, " & $this["name"] & "!")`).
+- **Single file, zero dependencies** — `src/mail.timl` holds every macro; only `tim` itself is required.
 
 ## Use
 
@@ -23,18 +35,14 @@
       @mail-button($label="Get started", $href="https://example.com/start", $background-color="#e74c3c")
 ```
 
-Until the `pkg/` resolver is wired in the engine, import relatively:
-
-```timl
-@import "../src/mail"
-```
-
-See `test/welcome.timl` for a full example exercising every macro.
+See `test/welcome.timl` for a full example exercising every macro
+(including a VML background section with two columns) and
+`test/named.timl` for the named-arg style.
 
 ## API
 
-All params are positional and carry MJML defaults — pass only what
-you override. Param names are kebab-case, mirroring MJML attributes.
+Every param carries an MJML default — pass only what you override.
+Names are kebab-case, mirroring MJML attributes.
 
 | Macro | Params (in order) |
 |---|---|
@@ -46,9 +54,6 @@ you override. Param names are kebab-case, mirroring MJML attributes.
 | `divider` | `border-color`, `border-style="solid"`, `border-width="4px"`, `width="100%"`, `align="center"`, `padding="10px 25px"` |
 | `mail-button` | `label`, `href`, `background-color="#414141"`, `color="#ffffff"`, `border-radius="3px"`, `font-size="13px"`, `font-family`, `font-weight="normal"`, `inner-padding="10px 25px"`, `align="center"` |
 | `spacer` | `height="20px"` |
-
-`mail-button` is prefixed to avoid clashing with bootstrap's `button`
-when both packages are imported.
 
 ## Call rules
 
