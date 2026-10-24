@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://raw.githubusercontent.com/tim-engine/tim/main/.github/tim_logo.png" alt="Tim - Template Engine" width="120px" height="120px"><br>
-  Tim Engine library for creating responsive email templates via Tim macros<br>
+  A Tim Engine package for creating responsive email templates<br>
 </p>
 
 <p align="center">
