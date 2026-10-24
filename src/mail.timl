@@ -4,8 +4,8 @@
 // would resolve to an empty module).
 //
 // Usage:
-//   @import "pkg/mail/mail"      // once the `pkg/` resolver is wired
-//   @import "../src/mail"        // relative import (works today)
+//   @import "pkg/mail"           // package import (resolves to src/mail.timl)
+//   @import "../src/mail"        // relative import, same module
 //
 // Args can be positional or named (`name=value` or `$name=value`,
 // kebab-case included — identifiers carry `-`):
