@@ -37,7 +37,8 @@
 // Full HTML document: head with responsive `<style>` (columns stack
 // below `breakpoint` via `.mail-column`), hidden preview text, and a
 // `role="article"` wrapper. Tim re-adds `<!DOCTYPE html>` at render.
-macro mail-body*(width: string = "600px", background-color: string = "#ffffff", breakpoint: string = "480px", title: string = "", preview: string = "") =
+macro mail-body*(width: string = "600px", background-color: string = "#ffffff",
+        breakpoint: string = "480px", title: string = "", preview: string = "") =
   html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
     head
       title: $title
@@ -56,7 +57,8 @@ macro mail-body*(width: string = "600px", background-color: string = "#ffffff", 
 // presentation table. A `background-url` also emits a VML `v:rect`
 // block for Outlook desktop plus a `background` attribute for the
 // other clients.
-macro section*(background-color: string = "#ffffff", background-url: string = "", padding: string = "20px 0", text-align: string = "center", direction: string = "ltr") =
+macro section*(background-color: string = "#ffffff", background-url: string = "",
+        padding: string = "20px 0", text-align: string = "center", direction: string = "ltr") =
   if $background-url != "":
     span: "<!--[if mso | IE]><v:rect xmlns:v=\"urn:schemas-microsoft-com:vml\" fill=\"true\" stroke=\"false\" style=\"width:600px;\"><v:fill origin=\"0.5, 0\" position=\"0.5, 0\" src=\"" & $background-url & "\" color=\"" & $background-color & "\" type=\"tile\" /><v:textbox style=\"mso-fit-shape-to-text:true\" inset=\"0,0,0,0\"><![endif]-->"
   <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
