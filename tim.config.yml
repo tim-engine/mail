@@ -1,0 +1,10 @@
+name: mail
+type: package
+version: 0.1.0
+author: OpenPeeps
+license: MIT
+description: "MJML-style responsive email components for Tim Engine"
+git: "https://github.com/openpeeps/mail.timl"
+
+requires:
+  - tim >= 0.1.3

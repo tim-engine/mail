@@ -1,0 +1,15 @@
+@import "../src/mail"
+
+@mail-body("600px", "#f4f4f4", "480px", "Welcome", "Welcome to Tim mail"):
+  @section("#ffffff", "", "20px 0", "center", "ltr"):
+    @column("100%", "top", "", "0px"):
+      @text("Hello, reader!", "#333333", "16px")
+      @divider("#cccccc", "solid", "1px", "100%", "center", "10px 25px")
+      @image("https://example.com/logo.png", "Logo", "", "200px", "center", "10px 25px")
+      @mail-button("Get started", "https://example.com/start", "#e74c3c", "#ffffff", "3px", "13px", "Ubuntu, Helvetica, Arial, sans-serif", "normal", "10px 25px", "center")
+      @spacer("20px")
+  @section("#222222", "https://example.com/bg.png", "20px 0", "center", "ltr"):
+    @column("50%", "top", "", "10px"):
+      @text("Left cell", "#ffffff")
+    @column("50%", "top", "", "10px"):
+      @text("Right cell", "#ffffff")

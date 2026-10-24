@@ -1,0 +1,9 @@
+@import "pkg/mail"
+
+@mail-body($title="Named", $background-color="#f4f4f4", $preview="pre"):
+  @section($background-color="#ffffff"):
+    @column($width="50%"):
+      @text("Left", $color="#333333", $font-size="16px")
+    @column($width="50%"):
+      @text("Right", $color="#333333", $font-size="16px")
+      @mail-button($label="Go", $href="https://example.com", $background-color="#e74c3c")
