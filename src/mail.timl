@@ -33,12 +33,12 @@
 //   emitted via string concatenation into element content (tim renders
 //   strings raw, unescaped).
 
-// Document shell (like `mj-body` + `mj-head`).
-// Full HTML document: head with responsive `<style>` (columns stack
-// below `breakpoint` via `.mail-column`), hidden preview text, and a
-// `role="article"` wrapper. Tim re-adds `<!DOCTYPE html>` at render.
 macro mail-body*(width: string = "600px", background-color: string = "#ffffff",
         breakpoint: string = "480px", title: string = "", preview: string = "") =
+  // Document shell (like `mj-body` + `mj-head`).
+  // Full HTML document: head with responsive `<style>` (columns stack
+  // below `breakpoint` via `.mail-column`), hidden preview text, and a
+  // `role="article"` wrapper. Tim re-adds `<!DOCTYPE html>` at render.
   html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"
     head
       title: $title
@@ -52,13 +52,13 @@ macro mail-body*(width: string = "600px", background-color: string = "#ffffff",
       div role="article" aria-roledescription="email" dir="ltr" style="background-color:" & $background-color & ";"
         @statement
 
-// Section — full-width structural block (like `mj-section`).
-// Nested-table soup: outer Outlook wrapper, centered max-width div,
-// presentation table. A `background-url` also emits a VML `v:rect`
-// block for Outlook desktop plus a `background` attribute for the
-// other clients.
 macro section*(background-color: string = "#ffffff", background-url: string = "",
         padding: string = "20px 0", text-align: string = "center", direction: string = "ltr") =
+  // Section — full-width structural block (like `mj-section`).
+  // Nested-table soup: outer Outlook wrapper, centered max-width div,
+  // presentation table. A `background-url` also emits a VML `v:rect`
+  // block for Outlook desktop plus a `background` attribute for the
+  // other clients.
   if $background-url != "":
     span: "<!--[if mso | IE]><v:rect xmlns:v=\"urn:schemas-microsoft-com:vml\" fill=\"true\" stroke=\"false\" style=\"width:600px;\"><v:fill origin=\"0.5, 0\" position=\"0.5, 0\" src=\"" & $background-url & "\" color=\"" & $background-color & "\" type=\"tile\" /><v:textbox style=\"mso-fit-shape-to-text:true\" inset=\"0,0,0,0\"><![endif]-->"
   <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
@@ -74,10 +74,11 @@ macro section*(background-color: string = "#ffffff", background-url: string = ""
   if $background-url != "":
     span: "<!--[if mso | IE]></v:textbox></v:rect><![endif]-->"
 
-// Column — content cell inside a section (like `mj-column`).
-// Siblings share the section width: pass explicit widths
-// (`@column("50%")` + `@column("50%")`) or px values.
-macro column*(width: string = "100%", vertical-align: string = "top", background-color: string = "", padding: string = "0px") =
+macro column*(width: string = "100%", vertical-align: string = "top",
+              background-color: string = "", padding: string = "0px") =
+  // Column — content cell inside a section (like `mj-column`).
+  // Siblings share the section width: pass explicit widths
+  // (`@column("50%")` + `@column("50%")`) or px values.
   <!--[if mso | IE]><td><![endif]-->
   div class="mail-column" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:" & $vertical-align & ";width:" & $width & ";"
     table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="vertical-align:" & $vertical-align & ";background-color:" & $background-color & ";"
@@ -87,18 +88,21 @@ macro column*(width: string = "100%", vertical-align: string = "top", background
             @statement
   <!--[if mso | IE]></td><![endif]-->
 
-// Text — paragraph block (like `mj-text`).
-// Content is a plain param so `$this` data flows naturally:
-//   @text("Hello, " & $this["name"], "#333333", "16px")
-// (A bare string in a trailing `:` block would bind as a regular
-// macro arg — the engine only injects element/call/if nodes into
-// `@statement` — so `text` takes content positionally instead.)
-macro text*(content: string = "", color: string = "#000000", font-size: string = "13px", font-family: string = "Ubuntu, Helvetica, Arial, sans-serif", line-height: string = "1", align: string = "left", padding: string = "10px 25px") =
+macro text*(content: string = "", color: string = "#000000", font-size: string = "13px",
+            font-family: string = "Ubuntu, Helvetica, Arial, sans-serif", line-height: string = "1",
+            align: string = "left", padding: string = "10px 25px") =
+  // Text — paragraph block (like `mj-text`).
+  // Content is a plain param so `$this` data flows naturally:
+  //   @text("Hello, " & $this["name"], "#333333", "16px")
+  // (A bare string in a trailing `:` block would bind as a regular
+  // macro arg — the engine only injects element/call/if nodes into
+  // `@statement` — so `text` takes content positionally instead.)
   div style="font-family:" & $font-family & ";font-size:" & $font-size & ";line-height:" & $line-height & ";text-align:" & $align & ";color:" & $color & ";padding:" & $padding & ";": $content
 
-// Image — fluid image with optional link (like `mj-image`).
-// Only `src` is required; with `href` the image wraps in `<a>`.
-macro image*(src: string, alt: string = "", href: string = "", width: string = "100%", align: string = "center", padding: string = "10px 25px") =
+macro image*(src: string, alt: string = "", href: string = "", width: string = "100%",
+          align: string = "center", padding: string = "10px 25px") =
+  // Image — fluid image with optional link (like `mj-image`).
+  // Only `src` is required; with `href` the image wraps in `<a>`.
   table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;"
     tbody
       tr
@@ -109,18 +113,21 @@ macro image*(src: string, alt: string = "", href: string = "", width: string = "
           else:
             img src=$src alt=$alt style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:" & $width & ";font-size:13px;"
 
-// Divider — horizontal rule (like `mj-divider`).
-// `border-top` paragraph plus the empty Outlook table fallback.
-macro divider*(border-color: string = "#000000", border-style: string = "solid", border-width: string = "4px", width: string = "100%", align: string = "center", padding: string = "10px 25px") =
+macro divider*(border-color: string = "#000000", border-style: string = "solid", border-width: string = "4px",
+          width: string = "100%", align: string = "center", padding: string = "10px 25px") =
+  // Divider — horizontal rule (like `mj-divider`).
+  // `border-top` paragraph plus the empty Outlook table fallback
   div style="padding:" & $padding & ";"
     p style="border-top:" & $border-style & " " & $border-width & " " & $border-color & ";font-size:1px;margin:0px auto;width:" & $width & ";"
     <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation"><tr><td style="height:0;line-height:0;">&nbsp;</td></tr></table><![endif]-->
 
-// Button — bulletproof CTA (like `mj-button`).
-// Named `mail-button` to avoid clashing with bootstrap's `button`
-// when both packages are imported. `bgcolor` + `mso-padding-alt`
-// carry Outlook; the padded `<a>` carries everyone else.
-macro mail-button*(label: string, href: string, background-color: string = "#414141", color: string = "#ffffff", border-radius: string = "3px", font-size: string = "13px", font-family: string = "Ubuntu, Helvetica, Arial, sans-serif", font-weight: string = "normal", inner-padding: string = "10px 25px", align: string = "center") =
+macro mail-button*(label: string, href: string, background-color: string = "#414141", color: string = "#ffffff",
+              border-radius: string = "3px", font-size: string = "13px", font-family: string = "Ubuntu, Helvetica, Arial, sans-serif",
+              font-weight: string = "normal", inner-padding: string = "10px 25px", align: string = "center") =
+  // Button — bulletproof CTA (like `mj-button`).
+  // Named `mail-button` to avoid clashing with bootstrap's `button`
+  // when both packages are imported. `bgcolor` + `mso-padding-alt`
+  // carry Outlook; the padded `<a>` carries everyone else.
   table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;"
     tbody
       tr
